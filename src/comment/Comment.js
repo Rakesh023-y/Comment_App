@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Comment =({name, comment})=>{
-    return(
-        <div className="row">
-        <p className="c_name mx-2">{name} </p><span className="text-end"></span>
-        <div className="mx-2 mb-2">{comment}</div>
-        <div className="link">
-            <a href="reply" className="mx-2">Reply <span className="mx-3">Edit</span></a>
-        </div>
+const Comment = ({ data,index, handleReply }) => {
+
+    return (
+        <div className="container">
+             <div className="card _card  ">
+             <div className="row">
+                <p className="c_name mx-2">{data.name} </p><span className="text-end"></span>
+                <div className="mx-2 mb-2">{data.comment}</div>
+                <div className="link">
+                    <button  className="btn btn-link mx-2" onClick={()=>handleReply(data,index)}>Reply <span className="mx-3">Edit</span></button>
+                </div>
+                </div>
+            </div>
         </div>
     )
 }
