@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import moment from "moment";
 import Comment_box from "./Comment_box";
 import Comment from "./Comment";
 import Reply_box from "../reply/Reply_box";
 import Reply from "../reply/Reply";
+import Edit from "../reply/Edit";
+
 
 const Main = () => {
 
@@ -10,10 +13,13 @@ const Main = () => {
     const [open, setOpen] = useState(false);
     const [selected_list, setSelectedList] = useState({});
     const [selected_index, setSelectedIndex] = useState();
-    
+    const [edit, setEdit] = useState(false);
+
 
     const handleAddComment = (data) => {
         data["nested_comments"] = []
+        data["date"] = new Date();
+        //  moment(new Date()).format('MMMM Do YYYY, h:mm:ss a');
         let comments = [...comment_list]
         comments.push(data)
         setCommentList(comments)
@@ -23,18 +29,22 @@ const Main = () => {
         replys[selected_index].nested_comments.push(data)
         setCommentList(replys)
     }
-    const handleReply =(data,index)=>{
+    const handleReply = (data, index) => {
         setSelectedList(data)
         setSelectedIndex(index)
         setOpen(true)
     }
-    console.log(selected_list)
+    const handleEdit = () => {
+        setEdit(true)
+    }
+
+    console.log(comment_list)
 
     return (
-        <div className="container-fluid mb-5 w-100">
+        <div className="container-fluid mb-5 w-100 main_container">
             <div className="row head_row">
-                <h4 className="text-white mt-4 mx-3">ASSIGNMENT</h4>
-                <div className="text-white mx-3">FRONTEND ENGINEER</div>
+                <h4 className="text-white mt-4 mx-3 mb-0">ASSIGNMENT</h4>
+                <div className="text-white mx-3 ">FRONTEND ENGINEER</div>
             </div>
             <div className="">
                 <h4 className="h_text">Objective</h4>
@@ -46,31 +56,31 @@ const Main = () => {
                     return (
                         <div key={n} className="">
                             <Comment data={d}
-                                    index = {n}
-                                handleReply = {handleReply} />
-            {open && d.name === selected_list.name &&
-            <div>
-            <Reply_box handleAddReply={handleAddReply} />
-            <div className="reply_container">
-                {
-                    d.nested_comments.length > 0 && d.nested_comments.map((rep, index) => {
-                        return (
-                            <div key={index} className="">
-                                <Reply name={rep.name}
-                                    reply={rep.reply}
-                                    handleAddReply={handleAddReply} />
-
-                            </div>
-                        )
-                    })
-                }
-            </div>
-            </div>}
+                                index={n}
+                                handleReply={handleReply}
+                                handleEdit={handleEdit}
+                                 />
+                            <Edit />
+                            {open && d.name === selected_list.name &&
+                                <div>
+                                    <Reply_box handleAddReply={handleAddReply} />
+                                    <div className="reply_container">
+                                        {
+                                            d.nested_comments.length > 0 && d.nested_comments.map((rep, index) => {
+                                                return (
+                                                    <div key={index} className="">
+                                                        <Reply name={rep.name}
+                                                            reply={rep.reply} />
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>}
                         </div>
                     )
                 })}
             </div>
-            
         </div>
 
     )

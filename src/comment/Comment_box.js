@@ -21,7 +21,7 @@ const Comment_box =({handleAddComment})=>{
 
     //  console.log(name,comment)
     return(
-        <div className="container bg-light w-75">
+        <div className="container bg-light ">
                 <div className="card _card">
                     <h5 className="m-2">Comment</h5>
                     <input type="text" className="e-mail m-2" placeholder="name" onChange={(e)=>handleNameChange(e)}/>

@@ -20,7 +20,7 @@ const Reply_box =({handleAddReply})=>{
         handleAddReply(reply_data)
     }
     return(
-        <div className="container mt-3 w-75 ">
+        <div className="container mt-3 ">
         <div className="card first_card">
             <p className="text mx-2">Reply</p>
             <input type="text" className="e-mail m-2" placeholder="name" onChange={(e)=>handleNameChange(e)}/>
