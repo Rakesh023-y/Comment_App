@@ -4,7 +4,6 @@ import Comment_box from "./Comment_box";
 import Comment from "./Comment";
 import Reply_box from "../reply/Reply_box";
 import Reply from "../reply/Reply";
-import Edit from "../reply/Edit";
 
 
 const Main = () => {
@@ -25,6 +24,7 @@ const Main = () => {
         setCommentList(comments)
     }
     const handleAddReply = (data) => {
+        data["date"] = new Date();
         let replys = [...comment_list]
         replys[selected_index].nested_comments.push(data)
         setCommentList(replys)
@@ -36,6 +36,12 @@ const Main = () => {
     }
     const handleEdit = () => {
         setEdit(true)
+    }
+    const handleUpdateComment =(index,comment)=>{
+      let updates = [...comment_list];
+      updates[index]["comment"] = comment;
+      setCommentList(updates)
+      setEdit(false)
     }
 
     console.log(comment_list)
@@ -59,8 +65,9 @@ const Main = () => {
                                 index={n}
                                 handleReply={handleReply}
                                 handleEdit={handleEdit}
+                                edit = {edit}
+                                handleUpdateComment ={handleUpdateComment}
                                  />
-                            <Edit />
                             {open && d.name === selected_list.name &&
                                 <div>
                                     <Reply_box handleAddReply={handleAddReply} />
@@ -70,7 +77,8 @@ const Main = () => {
                                                 return (
                                                     <div key={index} className="">
                                                         <Reply name={rep.name}
-                                                            reply={rep.reply} />
+                                                            reply={rep.reply}
+                                                             />
                                                     </div>
                                                 )
                                             })

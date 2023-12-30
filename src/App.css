@@ -27,9 +27,9 @@
 .first_card {
   background-color: rgb(179, 210, 236);
   margin-left: 70px;
-  /* width: 800px; */
-
+  margin-bottom: 10px;
 }
 .date_format{
-  font-weight: bold;
+  font-style: italic;
+  font-weight: 500;
 }
