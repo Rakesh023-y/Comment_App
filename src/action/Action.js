@@ -1,8 +1,17 @@
 export const Add_Comment =(data)=>
 dispatch=>{
+    console.log(data)
     dispatch({
         type: "ADD_COMMENT",
         payload: data
+    })
+
+}
+export const getComment =()=> 
+dispatch=>{
+    dispatch({
+        type: "GET_COMMENT",
+        payload: ""
     })
 }
 

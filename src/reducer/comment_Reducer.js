@@ -1,21 +1,24 @@
 const initialState = {
     comment_list: [],
-    reply_list: [],
-    update_reply: [],
-    edit_list: []
 }
 export const comment_Reducer = (state = initialState, action) => {
     switch (action.type) {
-        case "COMMENT_LIST":
+        case "ADD_COMMENT":
+            console.log(action.payload)
             return {
                 ...state,
                 comment_list: action.payload
             }
-        case "REPLY_LIST":
+        case "ADD_REPLY":
             return {
                 ...state,
                 reply_list: action.payload
             }
+            case "GET_COMMENT":
+                console.log(state)
+                return {
+                    ...state,
+                }
         case "UPDATE":
             return {
                 ...state,

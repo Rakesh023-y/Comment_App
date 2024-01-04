@@ -4,8 +4,8 @@ import Comment_box from "./Comment_box";
 import Comment from "./Comment";
 import Reply_box from "../reply/Reply_box";
 import Reply from "../reply/Reply";
-import { useDispatch } from "react-redux";
-import { Add_Comment } from "../action/Action";
+import { useDispatch, useSelector } from "react-redux";
+import { Add_Comment, getComment } from "../action/Action";
 
 
 const Main = () => {
@@ -17,19 +17,20 @@ const Main = () => {
     const [edit, setEdit] = useState(false);
     const [sort_in, setSortIn] = useState("asc")
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    // useEffect(()=>{
-    //  dispatch(Add_Comment)
-    // },[])
+    useEffect(()=>{
+     dispatch(getComment)
+    },[])
 
     const handleAddComment = (data) => {
         data["nested_comments"] = []
         data["date"] = new Date();
         //  moment(new Date()).format('MMMM Do YYYY, h:mm:ss a');
-        let comments = [...comment_list]
-        comments.push(data)
-        setCommentList(comments)
+        // let comments = [...comment_list]
+        // comments.push(data)
+        // setCommentList(comments)
+        dispatch(Add_Comment(data))
     }
     const handleAddReply = (data) => {
         data["date"] = new Date();
@@ -67,7 +68,8 @@ const Main = () => {
 
         setCommentList(sortedComment)
     }
-
+    const commentList = useSelector(state => state.commentList)
+    console.log(commentList)
 
     return (
         <div className="container-fluid mb-5 w-100 main_container">
