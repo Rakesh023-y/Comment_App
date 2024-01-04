@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Comment_box from "./Comment_box";
 import Comment from "./Comment";
 import Reply_box from "../reply/Reply_box";
 import Reply from "../reply/Reply";
+import { useDispatch } from "react-redux";
+import { Add_Comment } from "../action/Action";
 
 
 const Main = () => {
@@ -13,7 +15,13 @@ const Main = () => {
     const [selected_list, setSelectedList] = useState({});
     const [selected_index, setSelectedIndex] = useState();
     const [edit, setEdit] = useState(false);
+    const [sort_in, setSortIn] = useState("asc")
 
+    // const dispatch = useDispatch();
+
+    // useEffect(()=>{
+    //  dispatch(Add_Comment)
+    // },[])
 
     const handleAddComment = (data) => {
         data["nested_comments"] = []
@@ -37,14 +45,29 @@ const Main = () => {
     const handleEdit = () => {
         setEdit(true)
     }
-    const handleUpdateComment =(index,comment)=>{
-      let updates = [...comment_list];
-      updates[index]["comment"] = comment;
-      setCommentList(updates)
-      setEdit(false)
+    const handleUpdateComment = (index, comment) => {
+        let updates = [...comment_list];
+        updates[index]["comment"] = comment;
+        setCommentList(updates)
+        setEdit(false)
+    }
+    const SortedComment = () => {
+        let sortedComment = [...comment_list]
+        sortedComment = comment_list.sort((a, b) => {
+            if (sort_in === "asc") {
+                setSortIn("desc")
+                return a.date - b.date
+            } else {
+                setSortIn("asc")
+                return b.date - a.date;
+            }
+
+        })
+        console.log(sortedComment)
+
+        setCommentList(sortedComment)
     }
 
-    console.log(comment_list)
 
     return (
         <div className="container-fluid mb-5 w-100 main_container">
@@ -56,7 +79,10 @@ const Main = () => {
                 <h4 className="h_text">Objective</h4>
                 <p className="">Create a comments section using React.js. Please refer the design below </p>
             </div>
-            <Comment_box handleAddComment={handleAddComment} />
+            <Comment_box
+                handleAddComment={handleAddComment}
+            />
+            <p className="text-end mb-0 me-5" onClick={SortedComment}>{sort_in === "asc" ? " Sort By: Date And Time↓" : "Sort By: Date And Time↑"} </p>
             <div className="comment_container mt-3">
                 {comment_list.length > 0 && comment_list.map((d, n) => {
                     return (
@@ -65,9 +91,9 @@ const Main = () => {
                                 index={n}
                                 handleReply={handleReply}
                                 handleEdit={handleEdit}
-                                edit = {edit}
-                                handleUpdateComment ={handleUpdateComment}
-                                 />
+                                edit={edit}
+                                handleUpdateComment={handleUpdateComment}
+                            />
                             {open && d.name === selected_list.name &&
                                 <div>
                                     <Reply_box handleAddReply={handleAddReply} />
@@ -76,9 +102,13 @@ const Main = () => {
                                             d.nested_comments.length > 0 && d.nested_comments.map((rep, index) => {
                                                 return (
                                                     <div key={index} className="">
-                                                        <Reply name={rep.name}
+                                                        <Reply data = {rep}
+                                                            index={index}
+                                                            name={rep.name}
                                                             reply={rep.reply}
-                                                             />
+                                                            edit={edit}
+                                                            handleEdit={handleEdit}
+                                                            handleUpdateComment={handleUpdateComment} />
                                                     </div>
                                                 )
                                             })

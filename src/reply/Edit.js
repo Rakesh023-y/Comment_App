@@ -4,7 +4,7 @@ const Edit =({data,handleEditComment})=>{
 
     return(
      <div className="">
-      <input type="text" value={data} onChange={(e)=>handleEditComment(e)}/>
+      <input type="text" value={data} onChange={(e)=>handleEditComment(e)} />
      </div>
     )
 }

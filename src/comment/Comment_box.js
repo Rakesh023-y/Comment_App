@@ -24,8 +24,8 @@ const Comment_box =({handleAddComment})=>{
         <div className="container bg-light ">
                 <div className="card _card">
                     <h5 className="m-2">Comment</h5>
-                    <input type="text" className="e-mail m-2" placeholder="name" onChange={(e)=>handleNameChange(e)}/>
-                    <input type="text" className="e-mail p-3 m-2" placeholder="Comment" onChange={(e)=>handleCommentChange(e)}/>
+                    <input type="text" className=" m-2" placeholder="name" onChange={(e)=>handleNameChange(e)}/>
+                    <input type="text" className=" p-3 m-2" placeholder="Comment" onChange={(e)=>handleCommentChange(e)}/>
                     <div className="button text-end m-3">
                     <button className="btn btn-primary" onClick={()=>handleAdd()} >POST</button>
                     </div>
